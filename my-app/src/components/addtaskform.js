@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 
-function AddTaskForm() {
+function AddTaskForm({ addTask }) {
   const [title, setTitle] = useState('');
+  const [priority, setPriority] = useState('medium');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('New task:', title);
+    if (!title.trim()) return;
+    addTask(title, priority);
     setTitle('');
+    setPriority('medium');
   };
 
   return (
@@ -17,6 +20,14 @@ function AddTaskForm() {
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Add a new task"
       />
+      <select
+        value={priority}
+        onChange={(e) => setPriority(e.target.value)}
+      >
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+      </select>
       <button type="submit">Add Task</button>
     </form>
   );
